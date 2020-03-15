@@ -10,34 +10,36 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/photoImageView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            app:imageUrl="@{viewModel.getPhotoURL()}"/>
-
-        <TextView
-            android:id="@+id/photoTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@{viewModel.getPhotoTitle()}"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            app:imageUrl="@{viewModel.getPhotoURL()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/image_view" />
+
+        <TextView
+            android:id="@+id/photoTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{viewModel.getPhotoTitle()}"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/photoImageView"
+            app:layout_constraintStart_toStartOf="@+id/photoImageView"
             app:layout_constraintTop_toBottomOf="@+id/photoImageView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

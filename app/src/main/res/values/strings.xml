@@ -14,4 +14,5 @@
     <string name="toolbar_title_imageviewer">Image Viewer</string>
     <string name="photo_viewer">Photo Viewer</string>
     <string name="photo_error">Error loading photos</string>
+    <string name="image_view">Image</string>
 </resources>
