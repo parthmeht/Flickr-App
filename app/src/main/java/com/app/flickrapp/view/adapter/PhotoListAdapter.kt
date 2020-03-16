@@ -1,8 +1,6 @@
 package com.app.flickrapp.view.adapter
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,9 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.flickrapp.R
 import com.app.flickrapp.databinding.ItemPhotoBinding
 import com.app.flickrapp.service.model.PhotoItem
-import com.app.flickrapp.view.ui.ImageViewActivity
-import com.app.flickrapp.view.ui.MainActivity
-import com.app.flickrapp.viewmodel.PhotoListViewModel
 import com.app.flickrapp.viewmodel.PhotoViewModel
 
 class PhotoListAdapter(private var photoList: List<PhotoItem>,

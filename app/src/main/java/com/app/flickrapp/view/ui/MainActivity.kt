@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,10 +12,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.flickrapp.R
 import com.app.flickrapp.databinding.ActivityMainBinding
-import com.app.flickrapp.service.model.PhotoItem
 import com.app.flickrapp.view.adapter.PhotoListAdapter
 import com.app.flickrapp.viewmodel.PhotoListViewModel
-import com.app.flickrapp.viewmodel.PhotoViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -44,16 +41,6 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
 
         viewModel.repositories.observe(this, Observer { it?.let{ photoListAdapter.updatePostList(it)} })
 
-        /*viewModel.selected.observe(this, Observer { photoItem ->
-            if (photoItem != null) {
-                Toast.makeText(this, "You selected a " + photoItem.getPhotoTitle().value, Toast.LENGTH_SHORT).show()
-                Log.d("Click", "You selected a " + photoItem.getPhotoTitle().value)
-            }else{
-                Toast.makeText(this, "You selected a null value ", Toast.LENGTH_SHORT).show()
-                Log.d("Click", "You selected a null")
-            }
-        })*/
-
         viewModel.loadingVisibility.value = View.GONE
         binding.searchButton.setOnClickListener {
             val inputText: String = binding.inputEditText.text.toString()
@@ -67,13 +54,6 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
         binding.executePendingBindings()
     }
 
-    /*fun onItemClick(index: Int?, photoViewModel: PhotoViewModel) {
-        Log.d("Click Main",index.toString())
-        Log.d("Click Main", photoViewModel.getPhotoTitle().value)
-        val intent = Intent (this@MainActivity, ImageViewActivity::class.java)
-        startActivity(intent)
-    }*/
-
     private fun showError(@StringRes errorMessage:Int){
         errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
         errorSnackbar?.setAction(R.string.retry, viewModel.errorClickListener)
@@ -86,5 +66,7 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
 
     override fun onItemClick(position: Int) {
         Log.d("Click Main", position.toString())
+        val intent = Intent (this@MainActivity, ImageViewActivity::class.java)
+        startActivity(intent)
     }
 }
