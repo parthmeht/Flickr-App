@@ -1,7 +1,10 @@
 package com.app.flickrapp.view.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,13 +13,18 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.flickrapp.R
 import com.app.flickrapp.databinding.ActivityMainBinding
+import com.app.flickrapp.service.model.PhotoItem
+import com.app.flickrapp.view.adapter.PhotoListAdapter
 import com.app.flickrapp.viewmodel.PhotoListViewModel
+import com.app.flickrapp.viewmodel.PhotoViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: PhotoListViewModel
+    private val photoListAdapter = PhotoListAdapter(arrayListOf(), this)
 
     private var errorSnackbar: Snackbar? = null
 
@@ -27,23 +35,44 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val gridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = gridLayoutManager
-        //binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
+        binding.recyclerView.adapter = this.photoListAdapter
         viewModel = ViewModelProviders.of(this).get(PhotoListViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
         })
+        viewModel.photoListAdapter = this.photoListAdapter
+
+        viewModel.repositories.observe(this, Observer { it?.let{ photoListAdapter.updatePostList(it)} })
+
+        /*viewModel.selected.observe(this, Observer { photoItem ->
+            if (photoItem != null) {
+                Toast.makeText(this, "You selected a " + photoItem.getPhotoTitle().value, Toast.LENGTH_SHORT).show()
+                Log.d("Click", "You selected a " + photoItem.getPhotoTitle().value)
+            }else{
+                Toast.makeText(this, "You selected a null value ", Toast.LENGTH_SHORT).show()
+                Log.d("Click", "You selected a null")
+            }
+        })*/
+
         viewModel.loadingVisibility.value = View.GONE
         binding.searchButton.setOnClickListener {
             val inputText: String = binding.inputEditText.text.toString()
-            if (inputText != null && inputText != "")
+            if (inputText != "")
                 viewModel.searchPhotos(inputText,1)
             else
                 showError(R.string.blank_input)
         }
 
         binding.viewModel = viewModel
+        binding.executePendingBindings()
     }
+
+    /*fun onItemClick(index: Int?, photoViewModel: PhotoViewModel) {
+        Log.d("Click Main",index.toString())
+        Log.d("Click Main", photoViewModel.getPhotoTitle().value)
+        val intent = Intent (this@MainActivity, ImageViewActivity::class.java)
+        startActivity(intent)
+    }*/
 
     private fun showError(@StringRes errorMessage:Int){
         errorSnackbar = Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)
@@ -53,5 +82,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideError(){
         errorSnackbar?.dismiss()
+    }
+
+    override fun onItemClick(position: Int) {
+        Log.d("Click Main", position.toString())
     }
 }

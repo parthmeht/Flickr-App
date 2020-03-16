@@ -1,9 +1,11 @@
 package com.app.flickrapp.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.app.flickrapp.BaseViewModel
 import com.app.flickrapp.R
+import com.app.flickrapp.service.model.PhotoItem
 import com.app.flickrapp.service.model.ResponsePhotoItemHolder
 import com.app.flickrapp.service.network.FlickrAPI
 import com.app.flickrapp.utils.FlickrUtils.API_KEY
@@ -16,13 +18,13 @@ import javax.inject.Inject
 class PhotoListViewModel: BaseViewModel() {
     @Inject
     lateinit var flickrAPI: FlickrAPI
-
-    val photoListAdapter: PhotoListAdapter = PhotoListAdapter()
-
-    private lateinit var subscription: Disposable
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
+    var repositories = MutableLiveData<List<PhotoItem>>()
+    val selected:MutableLiveData<PhotoViewModel> = MutableLiveData()
     val errorClickListener = View.OnClickListener {  }
+    private lateinit var subscription: Disposable
+    lateinit var  photoListAdapter: PhotoListAdapter
 
     fun searchPhotos(text: String, page: Int){
         subscription = flickrAPI.getSearchResults(API_KEY,text, page, 100)
@@ -46,8 +48,7 @@ class PhotoListViewModel: BaseViewModel() {
     }
 
     private fun onRetrieveSearchPhotosSuccess(response: ResponsePhotoItemHolder){
-        val photoList = response.photos.photo
-        photoListAdapter.updatePostList(photoList)
+        repositories.value = response.photos.photo
     }
 
     private fun onRetrieveSearchPhotosError(){

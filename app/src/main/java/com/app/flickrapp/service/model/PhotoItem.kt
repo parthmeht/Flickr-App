@@ -1,5 +1,7 @@
 package com.app.flickrapp.service.model
 
+import java.io.Serializable
+
 data class PhotoItem(
     var id: String,
     var owner: String,
@@ -10,4 +12,4 @@ data class PhotoItem(
     var ispublic: Short,
     var url_n: String?,
     var width_n: String?,
-    var height_n: String?)
+    var height_n: String?): Serializable

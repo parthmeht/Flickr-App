@@ -4,9 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="viewModel"
-            type="com.app.flickrapp.viewmodel.PhotoViewModel" />
+        <variable name="viewModel" type="com.app.flickrapp.viewmodel.PhotoViewModel" />
+        <variable name="position" type="java.lang.Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/image_view" />
+            android:contentDescription="@string/image_view"/>
+<!--            android:onClick="@{() -> mainActivity.onItemClick(position, viewModel)}"-->
 
         <TextView
             android:id="@+id/photoTitleTextView"

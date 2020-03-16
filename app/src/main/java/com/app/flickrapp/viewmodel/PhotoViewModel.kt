@@ -1,5 +1,6 @@
 package com.app.flickrapp.viewmodel
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.app.flickrapp.BaseViewModel
 import com.app.flickrapp.service.model.PhotoItem
@@ -63,4 +64,5 @@ class PhotoViewModel: BaseViewModel() {
     fun getPhotoHeight():MutableLiveData<String>{
         return photoHeight
     }
+
 }
