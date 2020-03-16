@@ -1,12 +1,9 @@
 package com.app.flickrapp.viewmodel
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import com.app.flickrapp.BaseViewModel
 import com.app.flickrapp.service.model.PhotoItem
 import com.app.flickrapp.utils.FlickrUtils
-import com.squareup.picasso.Picasso
 
 class PhotoViewModel: BaseViewModel() {
     private val photoId = MutableLiveData<String>()

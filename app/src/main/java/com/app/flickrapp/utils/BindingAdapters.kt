@@ -1,6 +1,5 @@
 package com.app.flickrapp.utils
 
-import android.R
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity

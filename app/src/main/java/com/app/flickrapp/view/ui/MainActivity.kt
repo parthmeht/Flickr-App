@@ -1,12 +1,12 @@
 package com.app.flickrapp.view.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.flickrapp.R
 import com.app.flickrapp.databinding.ActivityMainBinding
@@ -33,6 +33,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
         })
+        viewModel.loadingVisibility.value = View.GONE
+        binding.searchButton.setOnClickListener {
+            val inputText: String = binding.inputEditText.text.toString()
+            if (inputText != null && inputText != "")
+                viewModel.searchPhotos(inputText,1)
+            else
+                showError(R.string.blank_input)
+        }
+
         binding.viewModel = viewModel
     }
 

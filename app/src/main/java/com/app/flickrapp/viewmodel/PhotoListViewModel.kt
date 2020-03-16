@@ -24,12 +24,8 @@ class PhotoListViewModel: BaseViewModel() {
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener {  }
 
-    init{
-        searchPhotos("Natre",1)
-    }
-
     fun searchPhotos(text: String, page: Int){
-        subscription = flickrAPI.getSearchResults(API_KEY,text, 1, 100)
+        subscription = flickrAPI.getSearchResults(API_KEY,text, page, 100)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRetrieveSearchPhotosStart() }
@@ -41,12 +37,12 @@ class PhotoListViewModel: BaseViewModel() {
     }
 
     private fun onRetrieveSearchPhotosStart(){
-        //loadingVisibility.value = View.VISIBLE
+        loadingVisibility.value = View.VISIBLE
         errorMessage.value = null
     }
 
     private fun onRetrieveSearchPhotosFinish(){
-        //loadingVisibility.value = View.GONE
+        loadingVisibility.value = View.GONE
     }
 
     private fun onRetrieveSearchPhotosSuccess(response: ResponsePhotoItemHolder){

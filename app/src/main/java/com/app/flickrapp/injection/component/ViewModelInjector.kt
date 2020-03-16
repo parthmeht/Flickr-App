@@ -5,15 +5,12 @@ import com.app.flickrapp.viewmodel.PhotoListViewModel
 import dagger.Component
 import javax.inject.Singleton
 
-/**
- * Component providing inject() methods for presenters.
- */
 @Singleton
 @Component(modules = [(NetworkModule::class)])
 interface ViewModelInjector {
     /**
      * Injects required dependencies into the specified PostListViewModel.
-     * @param postListViewModel PostListViewModel in which to inject the dependencies
+     * @param photoListViewModel PostListViewModel in which to inject the dependencies
      */
     fun inject(photoListViewModel: PhotoListViewModel)
 
