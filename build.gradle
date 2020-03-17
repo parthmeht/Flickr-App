@@ -10,6 +10,11 @@ buildscript {
     ext.glideVersion = '3.7.0'
     ext.glideOkhttpIntegrationVersion = '1.5.0'
     ext.photoViewVersion = '2.0.0'
+    ext.expressoVersion = '3.0.1'
+    ext.mockitoVersion = '2.8.9'
+    ext.testRunnerVersion = '1.0.1'
+    ext.jUnitVersion = '4.12'
+
     repositories {
         google()
         jcenter()

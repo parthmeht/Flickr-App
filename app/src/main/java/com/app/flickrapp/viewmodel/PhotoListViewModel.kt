@@ -38,10 +38,6 @@ class PhotoListViewModel: BaseViewModel() {
             )
     }
 
-    fun getFlickrSearchResponse(): FlickrSearchResponse? {
-        return flickrSearchResponse.value
-    }
-
     private fun onRetrieveSearchPhotosStart(){
         loadingVisibility.value = View.VISIBLE
         errorMessage.value = null
