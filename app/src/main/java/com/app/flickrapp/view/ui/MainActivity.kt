@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.flickrapp.R
 import com.app.flickrapp.databinding.ActivityMainBinding
+import com.app.flickrapp.service.model.FlickrSearchResponse
 import com.app.flickrapp.service.model.PhotoItem
 import com.app.flickrapp.utils.Constants
 import com.app.flickrapp.view.adapter.PhotoListAdapter
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
     private lateinit var viewModel: PhotoListViewModel
     private val photoListAdapter = PhotoListAdapter(arrayListOf(), this)
     var photoItemList = MutableLiveData<List<PhotoItem>>()
+    var flickrSearchResponse = MutableLiveData<FlickrSearchResponse>()
+    var inputText = MutableLiveData<String>()
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,16 +45,45 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
         })
         viewModel.photoListAdapter = this.photoListAdapter
 
+        viewModel.flickrSearchResponse.observe(this, Observer { it?.let {
+            flickrSearchResponse.value = it
+            binding.pageTextView.text = "Page "+flickrSearchResponse.value!!.page.toString()
+            if(flickrSearchResponse.value!!.page==1)
+                binding.previousImageButton.isClickable = false
+            if(flickrSearchResponse.value!!.page == Integer.parseInt(flickrSearchResponse.value!!.total))
+                binding.nextImageButton.isClickable = false
+        } })
+
         viewModel.repositories.observe(this, Observer { it?.let{
             photoListAdapter.updatePostList(it)
             photoItemList.value = it
         } })
 
         viewModel.loadingVisibility.value = View.GONE
+
+        binding.previousImageButton.setOnClickListener{
+            if (!binding.nextImageButton.isClickable)
+                binding.nextImageButton.isClickable = true
+            if (flickrSearchResponse.value!=null && flickrSearchResponse.value!!.page>1){
+                viewModel.searchPhotos(inputText.value.toString(), flickrSearchResponse.value!!.page - 1)
+            }else
+                showError(R.string.previous_clicked)
+        }
+
+        binding.nextImageButton.setOnClickListener{
+            if (!binding.previousImageButton.isClickable)
+                binding.previousImageButton.isClickable = true
+            if (flickrSearchResponse.value!=null && flickrSearchResponse.value!!.page < Integer.parseInt(
+                    flickrSearchResponse.value!!.total)){
+                viewModel.searchPhotos(inputText.value.toString(), flickrSearchResponse.value!!.page + 1)
+            }else
+                showError(R.string.next_clicked)
+        }
+
         binding.searchButton.setOnClickListener {
-            val inputText: String = binding.inputEditText.text.toString()
-            if (inputText != "")
-                viewModel.searchPhotos(inputText,1)
+            inputText.value = binding.inputEditText.text.toString()
+            if (inputText.value != "")
+                viewModel.searchPhotos(inputText.value!!,1)
             else
                 showError(R.string.blank_input)
         }

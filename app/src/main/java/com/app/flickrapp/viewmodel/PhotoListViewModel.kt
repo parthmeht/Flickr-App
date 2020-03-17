@@ -21,10 +21,10 @@ class PhotoListViewModel: BaseViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     var repositories = MutableLiveData<List<PhotoItem>>()
-    var flickrSearchResponse: MutableLiveData<FlickrSearchResponse> = MutableLiveData()
+    var flickrSearchResponse= MutableLiveData<FlickrSearchResponse>()
     val errorClickListener = View.OnClickListener {  }
     private lateinit var subscription: Disposable
-    lateinit var  photoListAdapter: PhotoListAdapter
+    lateinit var photoListAdapter: PhotoListAdapter
 
     fun searchPhotos(text: String, page: Int){
         subscription = flickrAPI.getSearchResults(API_KEY,text, page, 100)
@@ -38,6 +38,10 @@ class PhotoListViewModel: BaseViewModel() {
             )
     }
 
+    fun getFlickrSearchResponse(): FlickrSearchResponse? {
+        return flickrSearchResponse.value
+    }
+
     private fun onRetrieveSearchPhotosStart(){
         loadingVisibility.value = View.VISIBLE
         errorMessage.value = null
@@ -49,6 +53,7 @@ class PhotoListViewModel: BaseViewModel() {
 
     private fun onRetrieveSearchPhotosSuccess(response: ResponsePhotoItemHolder){
         repositories.value = response.photos.photo
+        flickrSearchResponse.value = response.photos
     }
 
     private fun onRetrieveSearchPhotosError(){
