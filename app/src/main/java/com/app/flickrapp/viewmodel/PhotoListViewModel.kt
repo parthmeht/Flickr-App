@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.app.flickrapp.BaseViewModel
 import com.app.flickrapp.R
+import com.app.flickrapp.service.model.FlickrSearchResponse
 import com.app.flickrapp.service.model.PhotoItem
 import com.app.flickrapp.service.model.ResponsePhotoItemHolder
 import com.app.flickrapp.service.network.FlickrAPI
@@ -20,6 +21,7 @@ class PhotoListViewModel: BaseViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     var repositories = MutableLiveData<List<PhotoItem>>()
+    var flickrSearchResponse: MutableLiveData<FlickrSearchResponse> = MutableLiveData()
     val errorClickListener = View.OnClickListener {  }
     private lateinit var subscription: Disposable
     lateinit var  photoListAdapter: PhotoListAdapter

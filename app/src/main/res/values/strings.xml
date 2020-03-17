@@ -16,4 +16,5 @@
     <string name="photo_error">Error loading photos</string>
     <string name="blank_input">Enter an input string to search</string>
     <string name="image_view">Image</string>
+    <string name="previous">Previous</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.app.flickrapp.service.model
 
-data class FlickrSearchReponse(
+data class FlickrSearchResponse(
     val page: Int,
     val pages: Int,
     val perpage: Int,

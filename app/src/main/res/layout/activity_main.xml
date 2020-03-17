@@ -57,9 +57,41 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:adapter="@{viewModel.getPhotoListAdapter()}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/pageTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputEditText" />
+
+        <ImageButton
+            android:id="@+id/previousImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_navigate_before_56dp" />
+
+        <ImageButton
+            android:id="@+id/nextImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_navigate_next_56dp" />
+
+        <TextView
+            android:id="@+id/pageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextImageButton"
+            app:layout_constraintStart_toEndOf="@+id/previousImageButton" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
