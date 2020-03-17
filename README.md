@@ -1,7 +1,7 @@
 # Flickr App
 A Project to show implementation of Flickr API , written in kotlin using MVVM design pattern.
 
-![Demo]((/screenshot.png))
+![Demo]((screenshot.png))
 
 ### This project uses:
 * **Live Data** - For Reactive Programming
