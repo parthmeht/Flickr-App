@@ -16,6 +16,7 @@ class PhotoViewModel: BaseViewModel() {
     private val photoURL = MutableLiveData<String>()
     private val photoWidth = MutableLiveData<String>()
     private val photoHeight = MutableLiveData<String>()
+    private val photoDisplayURL = MutableLiveData<String>()
 
     fun bind(photoItem: PhotoItem){
         photoId.value = photoItem.id
@@ -27,6 +28,7 @@ class PhotoViewModel: BaseViewModel() {
         photoWidth.value = photoItem.width_n
         photoHeight.value = photoItem.height_n
         photoURL.value = photoItem.url_n ?: FlickrUtils.getFlickrImageLink(photoItem.id, photoItem.secret, photoItem.server, photoItem.farm, FlickrUtils.SMALL_360)
+        photoDisplayURL.value = FlickrUtils.getFlickrImageLink(photoItem.id, photoItem.secret, photoItem.server, photoItem.farm, FlickrUtils.MEDIUM_1024)
     }
 
     fun getPhotoId():MutableLiveData<String>{
@@ -63,6 +65,10 @@ class PhotoViewModel: BaseViewModel() {
 
     fun getPhotoHeight():MutableLiveData<String>{
         return photoHeight
+    }
+
+    fun getPhotoDisplayURL(): MutableLiveData<String>{
+        return photoDisplayURL
     }
 
 }

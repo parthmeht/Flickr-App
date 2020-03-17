@@ -5,4 +5,5 @@ object Constants{
     const val API_KEY: String = "5ba3fa8dff6e60ab9c0e513e2768b073"
     const val FLICKR_PHOTOS_SEARCH = "flickr.photos.search"
     const val JSON = "json"
+    const val PHOTO_ITEM = "photoItem"
 }

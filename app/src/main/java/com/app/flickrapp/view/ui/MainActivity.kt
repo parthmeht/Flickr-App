@@ -7,11 +7,14 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.flickrapp.R
 import com.app.flickrapp.databinding.ActivityMainBinding
+import com.app.flickrapp.service.model.PhotoItem
+import com.app.flickrapp.utils.Constants
 import com.app.flickrapp.view.adapter.PhotoListAdapter
 import com.app.flickrapp.viewmodel.PhotoListViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +25,7 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: PhotoListViewModel
     private val photoListAdapter = PhotoListAdapter(arrayListOf(), this)
-
+    var photoItemList = MutableLiveData<List<PhotoItem>>()
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +42,10 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
         })
         viewModel.photoListAdapter = this.photoListAdapter
 
-        viewModel.repositories.observe(this, Observer { it?.let{ photoListAdapter.updatePostList(it)} })
+        viewModel.repositories.observe(this, Observer { it?.let{
+            photoListAdapter.updatePostList(it)
+            photoItemList.value = it
+        } })
 
         viewModel.loadingVisibility.value = View.GONE
         binding.searchButton.setOnClickListener {
@@ -67,6 +73,8 @@ class MainActivity : AppCompatActivity() , PhotoListAdapter.OnItemClickListener{
     override fun onItemClick(position: Int) {
         Log.d("Click Main", position.toString())
         val intent = Intent (this@MainActivity, ImageViewActivity::class.java)
+        val bundle = Bundle()
+        intent.putExtra(Constants.PHOTO_ITEM, photoItemList.value!![position])
         startActivity(intent)
     }
 }

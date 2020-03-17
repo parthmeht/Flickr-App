@@ -20,7 +20,6 @@ class PhotoListViewModel: BaseViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     var repositories = MutableLiveData<List<PhotoItem>>()
-    val selected:MutableLiveData<PhotoViewModel> = MutableLiveData()
     val errorClickListener = View.OnClickListener {  }
     private lateinit var subscription: Disposable
     lateinit var  photoListAdapter: PhotoListAdapter
